@@ -1,0 +1,25 @@
+{% load bootstrap4 %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top flex-column">
+    <div class="w-100 d-flex">
+        <div class="navbar-header" id="header">
+            <h1 id="application_title" class="navbar-brand mb-0 h1">Austin Crime Incidents</h1>
+        </div>
+    </div>
+    
+    <div class="w-100 d-flex">
+        <ul class="navbar-nav mr-auto" id="navigation">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://data.austintexas.gov/Public-Safety/Crime-Reports/fdj4-gpfu/about_data" target="_blank">Data Source</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://data.austintexas.gov/stories/s/APD-Sector-Interactive-Map-Guide/kkcy-rhtk/" target="_blank">APD Sectors & Districts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://data.austintexas.gov/stories/s/Census-Block-Group-Interactive-Map-Guide/6ua8-656i/" target="_blank">Census Block Groups</a>
+            </li>
+        </ul>
+    </div>
+</nav>

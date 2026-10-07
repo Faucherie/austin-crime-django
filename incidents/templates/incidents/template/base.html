@@ -1,0 +1,25 @@
+{% include "incidents/template/header.html" %}
+{% include "incidents/template/title.html" %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1" id="incident_list">
+            <p>Total incidents: {{ incidents_count }}.</p>
+            {% block incidentList %}
+                <h2>Recent Incidents</h2>
+                <table>
+                    <tr><th>Incident ID</th></tr>
+                    {% for sidebar_incident in sidebar_incidents %}
+                        <tr><td><a href="{% url 'incident_detail' sidebar_incident.pk %}">{{ sidebar_incident.incident_number }}</a></td></tr>
+                    {% endfor %}
+                </table>
+            {% endblock %}
+            <p>More incidents available <a href="{% url 'list' %}">here</a>.</p>
+        </div>
+        <div class="col-md-8" id="content">
+            {% block content %}Didn't render content{% endblock %}
+        </div>
+    </div>
+</div>
+
+{% include "incidents/template/footer.html" %}

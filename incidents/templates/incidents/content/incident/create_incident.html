@@ -1,0 +1,71 @@
+{% extends "incidents/template/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add New Incident</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">Add New Incident</h1>
+            <p class="card-text">
+                Next incident number:
+                <span class="badge badge-primary">{{ next_incident_number }}</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form action="{% url 'create_incident' %}" method="post" class="form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label>Incident Number</label>
+                    <input type="text" class="form-control" value="{{ next_incident_number }}" disabled>
+                </div>
+
+                {% bootstrap_field form.family_violence %}
+                {% bootstrap_field form.occ_date %}
+                {% bootstrap_field form.occ_time %}
+                {% bootstrap_field form.rep_date %}
+                {% bootstrap_field form.rep_time %}
+                {% bootstrap_field form.location_type %}
+                {% bootstrap_field form.council_district %}
+                {% bootstrap_field form.census_block_group %}
+                {% bootstrap_field form.district %}
+
+                {% bootstrap_field clearance_form.clearance_status %}
+                {% bootstrap_field clearance_form.clearance_date %}
+
+                <div class="form-group">
+                    <label>Crimes</label>
+                    <ul class="list-unstyled">
+                        {% for category, crimes in crimes_by_category.items %}
+                            <li class="mb-3">
+                                <strong>{{ category }}</strong>
+                                <ul class="list-unstyled ml-4">
+                                    {% for crime in crimes %}
+                                        <li class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="crimes" value="{{ crime.pk }}" id="crime_{{ crime.pk }}">
+                                            <label class="form-check-label" for="crime_{{ crime.pk }}">{{ crime.crime_type }}</label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{% url 'index' %}" class="btn btn-outline-secondary ml-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

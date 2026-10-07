@@ -1,0 +1,25 @@
+{% extends "incidents/template/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ cancel_url }}">{{ object }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete</li>
+        </ol>
+    </nav>
+
+    <div class="card border-danger mb-4">
+        <div class="card-body">
+            <h1 class="card-title text-danger">Confirm Delete</h1>
+            <p class="card-text">Are you sure you want to delete <strong>{{ object }}</strong>?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Confirm</button>
+                <a href="{{ cancel_url }}" class="btn btn-outline-secondary ml-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

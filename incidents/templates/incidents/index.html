@@ -1,0 +1,79 @@
+{% extends "incidents/template/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Dashboard</h1>
+
+    <!--Create new Incident-->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-1">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title">Create new Incident</h2>
+                    <a href="{% url 'create_incident' %}" class="btn btn-success">Create new Incident</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Dashboard cards-->
+    <div class="card-columns">
+        <!--Location Types-->
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Location Types</h2>
+                 <a href="{% url 'create_location_type' %}" class="btn btn-primary mt-3">Create new Location Type</a>
+                <ul class="list-group list-group-flush">
+                    {% for location_type in location_types %}
+                        <li class="list-group-item">
+                            <a href="{% url 'location_type_detail' location_type.pk %}">{{ location_type }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!--UCR Categories-->
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">UCR Codes</h2>
+                {% for category, crimes in crimes_by_category.items %}
+                    <h3>{% if category.pk %}<a href="{% url 'detail_ucr_category' %}?pk={{ category.pk }}">{{ category }}</a>{% else %}{{ category }}{% endif %}</h3>
+                    <ul>
+                        {% for crime in crimes %}
+                            <li><a href="{% url 'detail_ucr_crime' %}?pk={{ crime.pk }}">{{ crime }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!--Lists-->
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">List Incidents</h2>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{% url 'list' %}">All Incidents</a></li>
+                    <li class="list-group-item"><a href="{% url 'no_clearance' %}">Incidents without clearance report</a></li>
+                    <li class="list-group-item"><a href="{% url 'family_violence_assault' %}">Family Violence Aggravated Assault (UCR 13a)</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!--Sector and Districts-->
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Sectors and Districts</h2>
+                {% for sector, districts in districts_by_sector.items %}
+                    <h3><a href="{% url 'detail_sector' %}?pk={{ sector.pk }}">{{ sector }}</a></h3>
+                    <ul>
+                        {% for district in districts %}
+                            <li><a href="{% url 'detail_district' %}?pk={{ district.pk }}">{{ district }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

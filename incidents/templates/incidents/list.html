@@ -1,0 +1,60 @@
+{% extends "incidents/template/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ type }}</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">Filtered List: {{ type }}</h1>
+            <p class="mb-0">Total incidents matching filter: {{ filtered_incidents_count }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title h5">Incidents</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead class="thead-dark">
+                        <tr><th>Incident ID</th><th>Occurred</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for incident in incidents %}
+                        <tr>
+                            <td><a href="{% url 'incident_detail' incident.pk %}">{{ incident.incident_number }}</a></td>
+                            <td>{{ incident.occ_date }} {{ incident.occ_time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% if page_obj %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-0">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+                    <li class="page-item active"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

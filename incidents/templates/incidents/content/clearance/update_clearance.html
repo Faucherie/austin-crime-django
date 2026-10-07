@@ -1,0 +1,33 @@
+{% extends "incidents/template/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'incident_detail' incident.pk %}">Incident {{ incident.incident_number }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'clearance_detail' %}?pk={{ clearance.pk }}">Clearance Report</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Clearance</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">Update Clearance for Incident {{ incident.incident_number }}</h1>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form action="{% url 'update_clearance' %}?pk={{ clearance.pk }}" method="post" class="form">
+                {% csrf_token %}
+                {% bootstrap_field form.clearance_status %}
+                {% bootstrap_field form.clearance_date %}
+                <button type="submit" class="btn btn-warning">Update</button>
+                <a href="{% url 'clearance_detail' %}?pk={{ clearance.pk }}" class="btn btn-outline-secondary ml-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

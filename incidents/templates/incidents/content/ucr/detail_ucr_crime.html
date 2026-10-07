@@ -1,0 +1,36 @@
+{% extends "incidents/template/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            {% if ucr_crime.ucr_category %}
+            <li class="breadcrumb-item"><a href="{% url 'detail_ucr_category' %}?pk={{ ucr_crime.ucr_category.pk }}">{{ ucr_crime.ucr_category }}</a></li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">UCR Crime {{ ucr_crime }}</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">UCR Crime {{ ucr_crime }}</h1>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title h5">Incidents</h2>
+            <p>Total: {{ count }}</p>
+            <a href="{% url 'list_by_ucr_crime' ucr_crime.pk %}" class="btn btn-primary">View all incidents for {{ ucr_crime }}</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title h5">Actions</h2>
+            <a href="{% url 'index' %}" class="btn btn-outline-secondary">Back to Index</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

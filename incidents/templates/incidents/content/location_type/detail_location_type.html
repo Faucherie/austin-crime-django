@@ -1,0 +1,33 @@
+{% extends "incidents/template/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container mt-4"></div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ location_type }}</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">Location Type: {{ location_type |title }}</h1>
+            <p class="card-text">
+                <span class="badge badge-primary badge-pill">{{ count }}</span>
+                incident{{ count|pluralize }}
+            </p>
+            <a href="{% url 'list_by_location_type' location_type.pk %}" class="btn btn-primary mr-2">List Incidents</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title h5">Actions</h2>
+            <a href="{% url 'update_location_type' location_type.pk %}" class="btn btn-warning mr-2">Update</a>
+            <a href="{% url 'delete_location_type' location_type.pk %}" class="btn btn-danger mr-2">Delete Location Type</a>
+            <a href="{% url 'index' %}" class="btn btn-outline-secondary">&larr; Back to Index</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
